@@ -7,6 +7,7 @@ package lendle.courses.network.requestparameterservlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,6 +33,7 @@ public class NewServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */
@@ -41,7 +43,20 @@ public class NewServlet extends HttpServlet {
             out.println("<title>Servlet NewServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
+            String username=request.getParameter("username");
+            String pass=request.getParameter("pass");
+            out.println("username="+username+",password="+pass);
+            
+            
+            Enumeration<String> en=request.getParameterNames();
+            while(en.hasMoreElements()){
+                String name=en.nextElement();
+                String[] sours =request.getParameterValues(name);
+                out.print("name:"+name+"<br/>");
+                for (int i=0; i  < sours.length; i++){
+                    out.print(sours[i]+"<br/>");
+                }
+            }
             out.println("</body>");
             out.println("</html>");
         } finally {
